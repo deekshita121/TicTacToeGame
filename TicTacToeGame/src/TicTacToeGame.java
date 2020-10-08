@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.*;
 public class TicTacToeGame {
 
 	Scanner sc =new Scanner(System.in);
@@ -21,9 +21,8 @@ public class TicTacToeGame {
 		return letter;
 	}
 	
-	public static void displayBoard()
+	public static void displayBoard(char[] board)
 	{
-		char board[] = boardCreation();
 		System.out.println(" "+board[0]+" | "+board[1]+ " | "+board[2]+ " ");
 		System.out.println("-----------");
 		System.out.println(" "+board[3]+" | "+board[4]+ " | "+board[5]+ " ");
@@ -37,7 +36,12 @@ public class TicTacToeGame {
 		while(true)
 		{
 		   if(freeSpace(board,position))
+		   {
+			   System.out.println("Position is free");
+			   board[position]='X';
+			   displayBoard(board);
 			   break;
+		   }
 		   else
 			   System.out.println("Position isnt free, enter another position");
 		}
@@ -67,12 +71,13 @@ public class TicTacToeGame {
 		
 		System.out.println("Computer Letter "+computerLetter);
 		System.out.println("Player Letter "+playerLetter);
-		displayBoard();
+		displayBoard(board);
 		
 		System.out.println("Enter the position");
 		int position = sc.nextInt();
 		choosePosition(position,board);
 		freeSpace(board,position);
+		//playerPosition(board,position);
 		
 	}
 	
