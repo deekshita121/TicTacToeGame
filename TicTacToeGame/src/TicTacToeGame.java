@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class TicTacToeGame {
 
+	Scanner sc =new Scanner(System.in);
 	public static char[] boardCreation()
 	{
 		char [] board = new char[10];
@@ -29,9 +30,33 @@ public class TicTacToeGame {
 		System.out.println("-----------");
 		System.out.println(" "+board[6]+" | "+board[7]+ " | "+board[8]+ " ");
 	}
+
+		
+	public static void choosePosition(int position, char[] board)
+	{
+		while(true)
+		{
+		   if(freeSpace(board,position))
+			   break;
+		   else
+			   System.out.println("Position isnt free, enter another position");
+		}
+	}
+	
+	public static boolean freeSpace(char[] board, int position) 
+	{
+		if (board[position] == ' ')
+			return true;
+
+		else
+			return false;
+
+	}
+	
 	
 	public static void main(String args[])
 	{
+		Scanner sc =new Scanner(System.in);
 		char computerLetter;
 		char[] board = boardCreation();
 		char playerLetter=chooseLetter();
@@ -43,6 +68,12 @@ public class TicTacToeGame {
 		System.out.println("Computer Letter "+computerLetter);
 		System.out.println("Player Letter "+playerLetter);
 		displayBoard();
+		
+		System.out.println("Enter the position");
+		int position = sc.nextInt();
+		choosePosition(position,board);
+		freeSpace(board,position);
+		
 	}
 	
 }
