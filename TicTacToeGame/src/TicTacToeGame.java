@@ -9,9 +9,10 @@ public class TicTacToeGame {
 	static Scanner sc = new Scanner(System.in);
 
 	/**
-	 * 
-	 * @return
-	 */
+	  *  uc1 
+	  *  @return
+	  **/
+
 	public static char[] boardCreation() {
 		char[] board = new char[10];
 		for (int i = 0; i < 10; i++) {
@@ -20,9 +21,12 @@ public class TicTacToeGame {
 		return board;
 	}
 
-	/**
-	 * uc2
-	 */
+
+	/*
+	 *  uc2
+	 * @no parameters
+	 **/
+
 
 	public static void chooseLetter() {
 		System.out.println("Enter letter X or O");
@@ -32,6 +36,7 @@ public class TicTacToeGame {
 		} else
 			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is X");
 	}
+
 
 	/**
 	 * uc3
@@ -47,6 +52,7 @@ public class TicTacToeGame {
 		System.out.println(" " + board[6] + " | " + board[7] + " | " + board[8] + " ");
 	}
 
+
 	/**
 	 * uc4
 	 * 
@@ -54,6 +60,7 @@ public class TicTacToeGame {
 	 * @param board
 	 * @param input
 	 */
+
 	public static void choosePosition(int position, char[] board, char input) {
 		while (true) {
 			if (freeSpace(board, position)) {
@@ -84,11 +91,13 @@ public class TicTacToeGame {
 
 	}
 
+
 	/**
 	 * uc6
 	 * 
 	 * @return
 	 */
+
 	public static String toss() {
 		int toss = (int) Math.floor(Math.random() * 10 % 2);
 		if (toss == HEADS)
@@ -97,6 +106,7 @@ public class TicTacToeGame {
 			return COMPUTER;
 
 	}
+
 
 	/**
 	 * uc7
@@ -132,6 +142,7 @@ public class TicTacToeGame {
 
 	}
 
+
 	public static void main(String args[]) {
 
 		char[] board = boardCreation();
@@ -146,8 +157,10 @@ public class TicTacToeGame {
 		int position = sc.nextInt();
 		choosePosition(position, board, input);
 		// freeSpace(board,position);
+
 		String outcome = result(board, input);
 		System.out.println("Outcome of the move is " + outcome);
+
 	}
 
 }
