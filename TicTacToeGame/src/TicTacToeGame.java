@@ -9,9 +9,11 @@ public class TicTacToeGame {
 	static Scanner sc = new Scanner(System.in);
 
 	/**
-	  *  uc1 
-	  *  @return
-	  **/
+	 * uc1
+	 * 
+	 * @return
+	 **/
+
 	public static char[] boardCreation() {
 		char[] board = new char[10];
 		for (int i = 0; i < 10; i++) {
@@ -19,6 +21,7 @@ public class TicTacToeGame {
 		}
 		return board;
 	}
+
 
 	/*
 	 *  uc2
@@ -34,10 +37,11 @@ public class TicTacToeGame {
 			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is X");
 	}
 
-	/*
+	/**
 	 * uc3
-	 *@param input
-	 **/
+	 * 
+	 * @param board
+	 */
 
 	public static void displayBoard(char[] board) {
 		System.out.println(" " + board[0] + " | " + board[1] + " | " + board[2] + " ");
@@ -47,11 +51,13 @@ public class TicTacToeGame {
 		System.out.println(" " + board[6] + " | " + board[7] + " | " + board[8] + " ");
 	}
 
-	/* 
-	 * uc5 
+	/**
+	 * uc4
+	 * 
+	 * @param position
+	 * @param board
 	 * @param input
-	 **/
-
+	 */
 	public static void choosePosition(int position, char[] board, char input) {
 		while (true) {
 			if (freeSpace(board, position)) {
@@ -65,11 +71,13 @@ public class TicTacToeGame {
 		}
 	}
 
-	/* 
+	/**
 	 * uc4
+	 * 
+	 * @param board
+	 * @param position
 	 * @return
-	 **/
-
+	 */
 	public static boolean freeSpace(char[] board, int position) {
 		if (board[position] == ' ')
 			return true;
@@ -79,16 +87,52 @@ public class TicTacToeGame {
 
 	}
 
-	/*
-	 *  uc6
-	 *@return
-	 **/
+	/**
+	 * uc6
+	 * 
+	 * @return
+	 */
 	public static String toss() {
 		int toss = (int) Math.floor(Math.random() * 10 % 2);
 		if (toss == HEADS)
 			return PLAYER;
 		else
 			return COMPUTER;
+
+	}
+
+
+	/**
+	 * uc7
+	 * 
+	 * @param board
+	 * @param input
+	 * @return
+	 */
+
+	public static String result(char[] board, char input) {
+		int flag = 0;
+		for (int i = 0; i < 10; i++) {
+			if (board[i] == ' ') {
+				flag = 1;
+				break;
+			}
+		}
+
+		if ((board[0] == input && board[1] == input && board[2] == input)
+				|| (board[3] == input && board[4] == input && board[5] == input)
+				|| (board[6] == input && board[7] == input && board[8] == input)
+				|| (board[0] == input && board[3] == input && board[6] == input)
+				|| (board[1] == input && board[4] == input && board[7] == input)
+				|| (board[2] == input && board[5] == input && board[8] == input)
+				|| (board[0] == input && board[4] == input && board[8] == input)
+				|| (board[2] == input && board[1] == input && board[6] == input))
+
+			return "WIN";
+		else if (flag == 1)
+			return "CHANGE TURN";
+		else
+			return "TIE";
 
 	}
 
@@ -106,6 +150,8 @@ public class TicTacToeGame {
 		int position = sc.nextInt();
 		choosePosition(position, board, input);
 		// freeSpace(board,position);
+		String outcome = result(board, input);
+		System.out.println("Outcome of the move is " + outcome);
 
 	}
 
