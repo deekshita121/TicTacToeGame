@@ -221,6 +221,49 @@ public class TicTacToeGame {
 		}
 		return positionForPlayerWin;
 	}
+	/**
+	 * uc10
+	 * @param board
+	 * @return
+	 */
+	public static int computerCorner(char[] board)
+	{
+		int cornerIndex = 10;
+		if(board[0]==' ')
+			cornerIndex = 0;
+		else if(board[2]==' ')
+			cornerIndex = 2;
+		else if(board[6]==' ')
+			cornerIndex = 6;
+		else if(board[8]==' ')
+			cornerIndex = 8;
+		return cornerIndex;
+	}
+	/**
+	 * 
+	 * @param board
+	 * @param positionC
+	 * @param computerLetter
+	 */
+	public static void computerMove(char[] board, int positionC, char computerLetter) {
+		while (true) {
+			if (freeSpace(board, positionC)) {
+				System.out.println("Position is free");
+				board[positionC] = computerLetter;
+				displayBoard(board);
+				break;
+
+			} else {
+				System.out.println("Position isnt free, enter another position");
+				displayBoard(board);
+			    positionC = (int) (Math.floor(Math.random() * 10 % 9));
+				System.out.println("Computer choose "+positionC);
+				computerMove(board, positionC, computerLetter);
+				break;
+			}
+
+		}
+	}
 
 	public static void main(String args[]) {
 
@@ -249,10 +292,12 @@ public class TicTacToeGame {
 		do {
 			int positionComputer = 0;
 			int blockPlayer = 0;
+			int cornerPosition = 0;
 			if (gamer == COMPUTER) {
 				displayBoard(board);
 				positionComputer = computerWin(board, input);
 				blockPlayer = computerBlock(board, input, playerLetter, computerLetter);
+				cornerPosition = computerCorner(board);
 				if (positionComputer != 10) {
 					System.out.println("Computer will win if " + positionComputer + " is choosen");
 					board[positionComputer] = input;
@@ -261,11 +306,15 @@ public class TicTacToeGame {
 					System.out.println("Player will win if " + blockPlayer + " is choosen. So block that");
 					board[blockPlayer] = input;
 					displayBoard(board);
+				} else if (cornerPosition != 10) {
+					System.out.println("Computer choose corner position "+cornerPosition);
+					board[cornerPosition] = input;
+					displayBoard(board);
 				} else {
 					System.out.println("Enter position for computer ");
 					int positionC = (int) (Math.floor(Math.random() * 10 % 9));
 					System.out.println("Computer choose position " + positionC);
-					choosePosition(positionC, board, input);
+					computerMove(board, positionC, computerLetter);
 					displayBoard(board);
 				}
 			} else {
