@@ -283,9 +283,10 @@ public class TicTacToeGame {
 			sideIndex = 7;
 		return sideIndex;
 	}
-
-	public static void main(String args[]) {
-
+	/**
+	 * uc12, uc13
+	 */
+	public static void game() {
 		char[] board = boardCreation();
 		char letter = ' ';
 		displayBoard(board);
@@ -359,6 +360,16 @@ public class TicTacToeGame {
 			} else
 				turn = 1;
 		} while (turn != 1);
+	}
+
+	public static void main(String args[]) {
+
+		char playAgain=' ';
+		do {
+			game();
+			System.out.println("Do you want to play again ? (Y / N)");
+			playAgain = sc.next().charAt(0);
+		}while(playAgain != 'N');
 	}
 
 }
