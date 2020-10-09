@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 public class TicTacToeGame {
@@ -23,9 +24,10 @@ public class TicTacToeGame {
 	}
 
 
-	/*
+	/**
 	 *  uc2
-	 * @no parameters
+   *
+	 * @param letter
 	 **/
 
 	public static char chooseLetter(char letter) {
@@ -139,6 +141,7 @@ public class TicTacToeGame {
 			return "TIE";
 
 	}
+  
 	
 	public static char swapInput(char input,char playerLetter,char computerLetter) {
 		if(input == playerLetter)
