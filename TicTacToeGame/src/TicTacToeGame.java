@@ -263,6 +263,25 @@ public class TicTacToeGame {
 
 		}
 	}
+	/**
+	 * uc11
+	 * @param board
+	 * @return
+	 */
+	public static int computerCentreOrSide(char[] board) {
+		int sideIndex = 0;
+		if(board[4]==' ')
+			sideIndex = 4;
+		else if(board[3]==' ')
+			sideIndex = 3;
+		else if(board[1]==' ')
+			sideIndex = 1;
+		else if(board[5]==' ')
+			sideIndex = 5;
+		else if(board[7]==' ')
+			sideIndex = 7;
+		return sideIndex;
+	}
 
 	public static void main(String args[]) {
 
@@ -292,11 +311,13 @@ public class TicTacToeGame {
 			int positionComputer = 0;
 			int blockPlayer = 0;
 			int cornerPosition = 0;
+			int centreSidePosition = 0;
 			if (gamer == COMPUTER) {
 				displayBoard(board);
 				positionComputer = computerWin(board, input);
 				blockPlayer = computerBlock(board, input, playerLetter, computerLetter);
 				cornerPosition = computerCorner(board);
+				centreSidePosition = computerCentreOrSide(board);
 				if (positionComputer != 10) {
 					System.out.println("Computer will win if " + positionComputer + " is choosen");
 					board[positionComputer] = input;
@@ -308,6 +329,10 @@ public class TicTacToeGame {
 				} else if (cornerPosition != 10) {
 					System.out.println("Computer choose corner position "+cornerPosition);
 					board[cornerPosition] = input;
+					displayBoard(board);
+				} else if(centreSidePosition != 10) {
+					System.out.println("Computer choose position "+cornerPosition);
+					board[centreSidePosition] = input;
 					displayBoard(board);
 				} else {
 					System.out.println("Enter position for computer ");
