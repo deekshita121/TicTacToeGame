@@ -23,16 +23,15 @@ public class TicTacToeGame {
 		return board;
 	}
 
-
-	/**
-	 *  uc2
-   *
-	 * @param letter
+	/*
+	 * uc2
+	 * 
+	 * @no parameters
 	 **/
 
 	public static char chooseLetter(char letter) {
 		System.out.println("Enter letter X or O for player");
-		 letter = sc.next().charAt(0);
+		letter = sc.next().charAt(0);
 		return letter;
 	}
 
@@ -65,15 +64,14 @@ public class TicTacToeGame {
 				displayBoard(board);
 				break;
 
-			} else
-			{
+			} else {
 				System.out.println("Position isnt free, enter another position");
 				displayBoard(board);
 				position = sc.nextInt();
-				choosePosition(position,board,input);
+				choosePosition(position, board, input);
 				break;
 			}
-			
+
 		}
 	}
 
@@ -106,7 +104,6 @@ public class TicTacToeGame {
 			return COMPUTER;
 
 	}
-
 
 	/**
 	 * uc7
@@ -141,34 +138,52 @@ public class TicTacToeGame {
 			return "TIE";
 
 	}
-  
-	
-	public static char swapInput(char input,char playerLetter,char computerLetter) {
-		if(input == playerLetter)
+
+	/**
+	 * 
+	 * @param input
+	 * @param playerLetter
+	 * @param computerLetter
+	 * @return
+	 */
+
+	public static char changeInput(char input, char playerLetter, char computerLetter) {
+		if (input == playerLetter)
 			input = computerLetter;
 		else
 			input = playerLetter;
 		return input;
 	}
 
-	public static String swapTurn(String gamer) {
-		if(gamer==PLAYER)
+	/**
+	 * 
+	 * @param gamer
+	 * @return
+	 */
+	public static String changeTurn(String gamer) {
+		if (gamer == PLAYER)
 			gamer = COMPUTER;
 		else
 			gamer = PLAYER;
 		return gamer;
 	}
-	
-	public static int computerWin(char[] board, char input)
-	{
+
+	/**
+	 * uc8
+	 * 
+	 * @param board
+	 * @param input
+	 * @return
+	 */
+	public static int computerWin(char[] board, char input) {
 		String computerWinPossibility;
 		int positionForComputerWin = 10;
-		
-		for(int i = 0; i <10; i++) {
-			if(board[i] == ' ') {
-				board[i] = input; 
-				computerWinPossibility = result(board, input); 
-				if(computerWinPossibility.contains("WIN")) {
+
+		for (int i = 0; i < 10; i++) {
+			if (board[i] == ' ') {
+				board[i] = input;
+				computerWinPossibility = result(board, input);
+				if (computerWinPossibility.contains("WIN")) {
 					positionForComputerWin = i;
 					break;
 				}
@@ -181,66 +196,60 @@ public class TicTacToeGame {
 	public static void main(String args[]) {
 
 		char[] board = boardCreation();
-        char letter=' ';
+		char letter = ' ';
 		displayBoard(board);
-		char playerLetter=chooseLetter(letter);
-		char computerLetter=' ';
+		char playerLetter = chooseLetter(letter);
+		char computerLetter = ' ';
 		if (playerLetter == 'X') {
 			computerLetter = 'O';
-			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is "+computerLetter);
+			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is " + computerLetter);
 		} else {
 			computerLetter = 'X';
-			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is "+computerLetter);
+			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is " + computerLetter);
 		}
 		String gamer = toss();
 		System.out.println("First chance " + gamer);
-		char input =' ';
-		if(gamer==PLAYER)
-			 input = playerLetter;
+		char input = ' ';
+		if (gamer == PLAYER)
+			input = playerLetter;
 		else
-			 input = computerLetter;
-		
-		System.out.println("Input taken for gamer is "+input);
-		int turn=0;
+			input = computerLetter;
+
+		System.out.println("Input taken for gamer is " + input);
+		int turn = 0;
 		do {
-		int positionComputer=0;
-		if(gamer==COMPUTER)
-		{
-			displayBoard(board);
-			positionComputer = computerWin(board,input);
-			if(positionComputer != 10)
-			{
-				System.out.println("Computer will win if "+positionComputer +" is choosen");
-				board[positionComputer]=input;
+			int positionComputer = 0;
+			if (gamer == COMPUTER) {
 				displayBoard(board);
+				positionComputer = computerWin(board, input);
+				if (positionComputer != 10) {
+					System.out.println("Computer will win if " + positionComputer + " is choosen");
+					board[positionComputer] = input;
+					displayBoard(board);
+				} else {
+					System.out.println("Enter position for computer ");
+					int positionC = sc.nextInt();
+					choosePosition(positionC, board, input);
+					displayBoard(board);
+				}
+			} 
+			else {
+				System.out.println("Enter the position player want to move");
+				int position = sc.nextInt();
+				choosePosition(position, board, input);
 			}
-			else
-			{
-				System.out.println("Enter position for computer ");
-				int positionC = sc.nextInt();
-				choosePosition(positionC,board,input);
-				displayBoard(board);
-			}
-		}
-		else
-		{
-		System.out.println("Enter the position player want to move");
-		int position = sc.nextInt();
-		choosePosition(position, board, input);
-		}
-		// freeSpace(board,position);
-		String outcome = result(board, input);
-		System.out.println("Outcome of the move is " + outcome);
-		if(outcome=="WIN")
-			turn=1;
-		else if(outcome=="CHANGE TURN") {
-		input = swapInput(input,playerLetter,computerLetter);
-		gamer = swapTurn(gamer);
-		turn =0;
-		}
-		else
-			turn=1;
-		}while(turn!=1);
+			// freeSpace(board,position);
+			String outcome = result(board, input);
+			System.out.println("Outcome of the move is " + outcome);
+			if (outcome == "WIN")
+				turn = 1;
+			else if (outcome == "CHANGE TURN") {
+				input = changeInput(input, playerLetter, computerLetter);
+				gamer = changeTurn(gamer);
+				turn = 0;
+			} else
+				turn = 1;
+		} while (turn != 1);
 	}
 
 }
