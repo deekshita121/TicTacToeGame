@@ -114,14 +114,13 @@ public class TicTacToeGame {
 	 */
 
 	public static String result(char[] board, char input) {
-		int flag = 0;
+		int count = 0;
 		for (int i = 0; i < 10; i++) {
-			if (board[i] == ' ') {
-				flag = 1;
-				break;
+			if (board[i] != ' ') {
+				count++;
+
 			}
 		}
-
 		if ((board[0] == input && board[1] == input && board[2] == input)
 				|| (board[3] == input && board[4] == input && board[5] == input)
 				|| (board[6] == input && board[7] == input && board[8] == input)
@@ -129,13 +128,15 @@ public class TicTacToeGame {
 				|| (board[1] == input && board[4] == input && board[7] == input)
 				|| (board[2] == input && board[5] == input && board[8] == input)
 				|| (board[0] == input && board[4] == input && board[8] == input)
-				|| (board[2] == input && board[1] == input && board[6] == input))
+				|| (board[2] == input && board[4] == input && board[6] == input))
 
 			return "WIN";
-		else if (flag == 1)
-			return "CHANGE TURN";
-		else
+
+		else if (count == 9)
 			return "TIE";
+
+		else
+			return "CHANGE TURN";
 
 	}
 
@@ -193,6 +194,34 @@ public class TicTacToeGame {
 		return positionForComputerWin;
 	}
 
+	/**
+	 * uc9
+	 * 
+	 * @param board
+	 * @param input
+	 * @param playerLetter
+	 * @param computerLetter
+	 * @return
+	 */
+	public static int computerBlock(char[] board, char input, char playerLetter, char computerLetter) {
+		String playerWinPossibility;
+		int positionForPlayerWin = 10;
+		char prevInput = changeInput(input, playerLetter, computerLetter);
+		for (int i = 0; i < 10; i++) {
+			if (board[i] == ' ') {
+				board[i] = prevInput;
+				playerWinPossibility = result(board, prevInput);
+				if (playerWinPossibility.contains("WIN")) {
+					positionForPlayerWin = i;
+					board[i] = ' ';
+					break;
+				}
+				board[i] = ' ';
+			}
+		}
+		return positionForPlayerWin;
+	}
+
 	public static void main(String args[]) {
 
 		char[] board = boardCreation();
@@ -219,21 +248,27 @@ public class TicTacToeGame {
 		int turn = 0;
 		do {
 			int positionComputer = 0;
+			int blockPlayer = 0;
 			if (gamer == COMPUTER) {
 				displayBoard(board);
 				positionComputer = computerWin(board, input);
+				blockPlayer = computerBlock(board, input, playerLetter, computerLetter);
 				if (positionComputer != 10) {
 					System.out.println("Computer will win if " + positionComputer + " is choosen");
 					board[positionComputer] = input;
 					displayBoard(board);
+				} else if (blockPlayer != 10) {
+					System.out.println("Player will win if " + blockPlayer + " is choosen. So block that");
+					board[blockPlayer] = input;
+					displayBoard(board);
 				} else {
 					System.out.println("Enter position for computer ");
-					int positionC = sc.nextInt();
+					int positionC = (int) (Math.floor(Math.random() * 10 % 9));
+					System.out.println("Computer choose position " + positionC);
 					choosePosition(positionC, board, input);
 					displayBoard(board);
 				}
-			} 
-			else {
+			} else {
 				System.out.println("Enter the position player want to move");
 				int position = sc.nextInt();
 				choosePosition(position, board, input);
